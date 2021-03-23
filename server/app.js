@@ -27,7 +27,7 @@ app.get("/api/tires", async (req, res) => {
     const tires = await db.select().table("tires");
     res.json(tires);
   } catch (err) {
-    console.error("Error loading locations!", err);
+    console.error("Error loading tires!", err);
     res.sendStatus(500);
   }
 });
