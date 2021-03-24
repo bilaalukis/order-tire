@@ -1,43 +1,39 @@
-import React, { useState } from "react";
-import { Button, Card, Alert } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import NavibarDash from "./NavibarDash";
+import TableDash from "./TableDash";
+import Jumbo from "./Jumbo";
+import ShoppingBar from "./ShoppingBar";
+import axios from "axios";
+
+// import { Link, useHistory } from "react-router-dom";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
-  const history = useHistory();
+  const [data, setData] = useState([]);
+  const [cartNum, setCartNum] = useState(0);
 
-  async function handleLogout() {
-    setError("");
-
-    try {
-      await logout();
-      history.push("/login");
-    } catch {
-      setError("Failed to log out");
-    }
-  }
+  useEffect(() => {
+    const onMount = async () => {
+      const datalist = await axios.get("api/tires");
+      setData(datalist.data);
+    };
+    onMount();
+  }, []);
 
   return (
     <React.Fragment>
-      <Card>
-        <Card.Body>
-          <h2 className="test-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <div className="d-flex justify-content-center">
-            <Link to="/update-profile" className="btn btn-primary w-40 mt-3">
-              Update Profile
-            </Link>
-          </div>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div>
+      <NavibarDash
+        currentUser={currentUser}
+        logout={logout}
+        setError={setError}
+      />
+      <Jumbo />
+      {error && <Alert variant="danger">{error}</Alert>}
+      <ShoppingBar cartNum={cartNum} />
+      <TableDash data={data} setCartNum={setCartNum} cartNum={cartNum} />
     </React.Fragment>
   );
 }

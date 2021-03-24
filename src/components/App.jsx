@@ -29,9 +29,9 @@ function App() {
             <Route
               exact
               path="/"
-              render={(props) => <Frontpage {...props} data={data} />}
+              render={(props) => <Frontpage {...props} data={this.data} />}
             />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/dashboard" component={Dashboard} data={data} />
             <PrivateRoute path="/update-profile" component={UpdateProfile} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />

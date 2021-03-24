@@ -31,7 +31,6 @@ export default function Jumbo() {
         <div className="overlay"></div>
         <Container>
           <h1>Welcome to Tiretron</h1>
-          <p>Sign up now to start placing orders</p>
         </Container>
       </Jumbotron>
     </Styles>

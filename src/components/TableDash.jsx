@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import AddToCart from "./AddToCart";
 
-export default function TableFront(props) {
+export default function TableDash(props) {
   const Styles = styled.div`
     .cont {
       background: url("https://i.ibb.co/jDWhS6m/tire2.jpg") no-repeat fixed
@@ -15,6 +16,18 @@ export default function TableFront(props) {
       z-index: -2;
     }
   `;
+
+  const [cardShow, setCardShow] = useState(false);
+  const [itemInfo, setItemInfo] = useState([]);
+
+  function handleClick(e) {
+    setCardShow(true);
+    let info = {
+      tiretype: e.target.parentNode.childNodes[0].innerText,
+      stock: e.target.parentNode.childNodes[3].innerText,
+    };
+    setItemInfo(info);
+  }
 
   const history = useHistory();
   return (
@@ -30,34 +43,19 @@ export default function TableFront(props) {
               <th>Size</th>
               <th>Grade</th>
               <th>Stock</th>
+              <th>Price</th>
             </tr>
           </thead>
           <tbody>
             {props.data.map((e) => {
-              let res = "";
-              console.log(e.stock < 20);
-              if (e.stock < 1) {
-                res = "Out of stock";
-              } else if (e.stock >= 1 && e.stock <= 10) {
-                res = "Very few";
-              } else if (e.stock > 10 && e.stock <= 25) {
-                res = "Some";
-              } else {
-                res = "Many";
-              }
-
               if (e.size === 12) {
                 return (
-                  <tr
-                    key={e.id}
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
+                  <tr key={e.id} onClick={handleClick}>
                     <td>{e.tiretype}</td>
                     <td>{e.size}</td>
                     <td>{e.grade}</td>
-                    <td>{res}</td>
+                    <td>{e.stock}</td>
+                    <td>{e.price}</td>
                   </tr>
                 );
               } else {
@@ -81,29 +79,14 @@ export default function TableFront(props) {
           </thead>
           <tbody>
             {props.data.map((e) => {
-              let res = "";
-              if (e.stock < 1) {
-                res = "Out of stock";
-              } else if (e.stock >= 1 && e.stock <= 10) {
-                res = "Very few";
-              } else if (e.stock > 10 && e.stock <= 25) {
-                res = "Some";
-              } else {
-                res = "Many";
-              }
-
               if (e.size === 13) {
                 return (
-                  <tr
-                    key={e.id}
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
+                  <tr key={e.id} onClick={handleClick}>
                     <td>{e.tiretype}</td>
                     <td>{e.size}</td>
                     <td>{e.grade}</td>
-                    <td>{res}</td>
+                    <td>{e.stock}</td>
+                    <td>{e.price}</td>
                   </tr>
                 );
               } else {
@@ -127,29 +110,14 @@ export default function TableFront(props) {
           </thead>
           <tbody>
             {props.data.map((e) => {
-              let res = "";
-              if (e.stock < 1) {
-                res = "Out of stock";
-              } else if (e.stock >= 1 && e.stock <= 10) {
-                res = "Very few";
-              } else if (e.stock > 10 && e.stock <= 25) {
-                res = "Some";
-              } else {
-                res = "Many";
-              }
-
               if (e.size === 14) {
                 return (
-                  <tr
-                    key={e.id}
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
+                  <tr key={e.id} onClick={handleClick}>
                     <td>{e.tiretype}</td>
                     <td>{e.size}</td>
                     <td>{e.grade}</td>
-                    <td>{res}</td>
+                    <td>{e.stock}</td>
+                    <td>{e.price}</td>
                   </tr>
                 );
               } else {
@@ -173,29 +141,14 @@ export default function TableFront(props) {
           </thead>
           <tbody>
             {props.data.map((e) => {
-              let res = "";
-              if (e.stock < 1) {
-                res = "Out of stock";
-              } else if (e.stock >= 1 && e.stock <= 10) {
-                res = "Very few";
-              } else if (e.stock > 10 && e.stock <= 25) {
-                res = "Some";
-              } else {
-                res = "Many";
-              }
-
               if (e.size === 15) {
                 return (
-                  <tr
-                    key={e.id}
-                    onClick={() => {
-                      history.push("/login");
-                    }}
-                  >
+                  <tr key={e.id} onClick={handleClick}>
                     <td>{e.tiretype}</td>
                     <td>{e.size}</td>
                     <td>{e.grade}</td>
-                    <td>{res}</td>
+                    <td>{e.stock}</td>
+                    <td>{e.price}</td>
                   </tr>
                 );
               } else {
@@ -204,6 +157,13 @@ export default function TableFront(props) {
             })}
           </tbody>
         </Table>
+        <AddToCart
+          show={cardShow}
+          onHide={() => setCardShow(false)}
+          item={itemInfo}
+          setCart={props.setCartNum}
+          cartNum={props.cartNum}
+        />
       </Container>
     </React.Fragment>
   );
