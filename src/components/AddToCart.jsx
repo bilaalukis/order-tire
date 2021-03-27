@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import {
   Container,
@@ -29,6 +29,8 @@ const Styles = styled.div`
 `;
 
 export default function AddToCart(props) {
+  // Stock number for dropdown
+  const [itemNum, setItemNum] = useState(0);
   const stock = props.item.stock;
   const num = [];
 
@@ -36,12 +38,18 @@ export default function AddToCart(props) {
     num.push(i);
   }
 
-  function handleClick() {}
+  //
+  function handleClick(e) {
+    setItemNum(e.target.innerText);
+  }
 
+  //
   function onAdd() {
     let newNum = props.cartNum + 1;
     props.setCart(newNum);
     props.onHide();
+    props.item.orderNum = itemNum;
+    props.setOrder((prev) => [...prev, props.item]);
   }
 
   return (
@@ -63,13 +71,19 @@ export default function AddToCart(props) {
               <thead>
                 <tr>
                   <th>Tire-type</th>
+                  <th>Size</th>
+                  <th>Grade</th>
                   <th>Stock</th>
+                  <th>Price</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>{props.item.tiretype}</td>
+                  <td>{props.item.size}</td>
+                  <td>{props.item.grade}</td>
                   <td>{props.item.stock}</td>
+                  <td>{props.item.price}</td>
                 </tr>
               </tbody>
             </Table>

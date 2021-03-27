@@ -19,7 +19,7 @@ export default function NavibarDash(props) {
   return (
     <React.Fragment>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/">Tiretron</Navbar.Brand>
+        <Navbar.Brand href="/dashboard">Tiretron</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav variant="pills" className="ml-auto">

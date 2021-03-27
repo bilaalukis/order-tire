@@ -9,7 +9,7 @@ import axios from "axios";
 
 // import { Link, useHistory } from "react-router-dom";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const [data, setData] = useState([]);
@@ -33,7 +33,13 @@ export default function Dashboard() {
       <Jumbo />
       {error && <Alert variant="danger">{error}</Alert>}
       <ShoppingBar cartNum={cartNum} />
-      <TableDash data={data} setCartNum={setCartNum} cartNum={cartNum} />
+      <TableDash
+        data={data}
+        setCartNum={setCartNum}
+        cartNum={cartNum}
+        setOrder={props.setOrder}
+        order={props.order}
+      />
     </React.Fragment>
   );
 }

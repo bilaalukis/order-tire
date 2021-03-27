@@ -24,7 +24,11 @@ export default function TableDash(props) {
     setCardShow(true);
     let info = {
       tiretype: e.target.parentNode.childNodes[0].innerText,
+      size: e.target.parentNode.childNodes[1].innerText,
+      grade: e.target.parentNode.childNodes[2].innerText,
       stock: e.target.parentNode.childNodes[3].innerText,
+      price: e.target.parentNode.childNodes[4].innerText,
+      orderNum: 0,
     };
     setItemInfo(info);
   }
@@ -163,6 +167,7 @@ export default function TableDash(props) {
           item={itemInfo}
           setCart={props.setCartNum}
           cartNum={props.cartNum}
+          setOrder={props.setOrder}
         />
       </Container>
     </React.Fragment>
