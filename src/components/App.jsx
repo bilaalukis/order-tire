@@ -9,9 +9,11 @@ import Signup from "./Signup";
 import PrivateRoute from "./PrivateRoute.jsx";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Cart from "./Cart";
 
 function App() {
   const [data, setData] = useState([]);
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
     const onMount = async () => {
@@ -20,6 +22,8 @@ function App() {
     };
     onMount();
   }, []);
+
+  console.log(order);
 
   return (
     <AuthProvider>
@@ -31,8 +35,22 @@ function App() {
               path="/"
               render={(props) => <Frontpage {...props} data={data} />}
             />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Route
+              path="/dashboard"
+              render={(props) => (
+                <Dashboard
+                  {...props}
+                  data={data}
+                  setOrder={setOrder}
+                  order={order}
+                />
+              )}
+            />
             <PrivateRoute path="/update-profile" component={UpdateProfile} />
+            <Route
+              path="/cart"
+              render={(props) => <Cart {...props} order={order} />}
+            />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
